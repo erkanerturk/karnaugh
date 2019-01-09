@@ -1,11 +1,11 @@
 // count number of variables within the expression
 function CountVar(oldString) {
-  let chars = {};
-  let rv = '';
+  var chars = {};
+  var rv = '';
   //a'dan z'ye A'dan Z'ye global arama yapar(küçük büyük harfe dikkat etmemesi için gi)
-  let newString = oldString.replace(/[^a-zA-Z]/g, '');
+  var newString = oldString.replace(/[^a-zA-Z]/g, '');
 
-  for (let i = 0; i < newString.length; ++i) {
+  for (var i = 0; i < newString.length; ++i) {
     if (!(newString[i] in chars)) {
       //eğer girdinin i. karakteri chars dizisinde yoksa
       chars[newString[i]] = 1;
@@ -19,11 +19,10 @@ function CountVar(oldString) {
 
   return rv.length;
 }
-
-// değişiklik yapıldı
+//değişiklik yapıldı
 // loop to replace the variables with the truth table value
 function replaceVar(expression) {
-  for (let i = 0; i < TruthTable.length; i++) {
+  for (var i = 0; i < TruthTable.length; i++) {
     string = expression.replace(/a/g, TruthTable[i][0].Variable);
     console.log(string);
     string = string.replace(/b/g, TruthTable[i][1].Variable);
@@ -40,17 +39,17 @@ document.getElementById('equation').addEventListener('change', function() {
   // check if input is valid
   if (isNaN(this.value) && this.value.match(/[0-9]/) == null) {
     //girilen değer sayı değilse işleme al
-    let strlower = this.value.toLowerCase();
+    var strlower = this.value.toLowerCase();
 
     console.log(strlower);
     //countvar fonksiyonuna gider
-    let varNum = CountVar(strlower);
+    var varNum = CountVar(strlower);
     //a-z olarak girilen harf sayısını döner
 
-    let func = strlower.split('+'); //aralarında + varsa onları bölüyor
+    var func = strlower.split('+'); //aralarında + varsa onları bölüyor
     console.log('func bu ', func);
 
-    for (let i = 0; i < func.length; i++) {
+    for (var i = 0; i < func.length; i++) {
       func[i] = func[i].trim(); //boşluklarını siler
 
       // put times(*)symbol between variables
@@ -77,9 +76,9 @@ document.getElementById('equation').addEventListener('change', function() {
 
     strlower = func.join(' | '); // bulduğu func stringlerini aralarına | ekleyerek birleştirdi
     console.log(strlower);
-
-    //harf sayısını kontrol ediyor
-    switch (varNum) {
+    switch (
+      varNum //harf sayısını kontrol ediyor
+    ) {
       case 4: //4 ise otomatik olarak 4 değişkeni seçiyor
         document.getElementById('FourVariableRB').click();
         replaceVar(strlower);
